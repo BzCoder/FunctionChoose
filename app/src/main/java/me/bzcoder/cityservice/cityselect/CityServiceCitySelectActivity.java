@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.bzcoder.app.MyApplication;
 import me.bzcoder.app.R;
 import me.bzcoder.cityservice.data.CityNameData;
 
@@ -54,8 +55,7 @@ public class CityServiceCitySelectActivity extends AppCompatActivity {
     }
 
     private void init() {
-        data = new CityNameData(CityNameData.cityMap.get("HangZhou")).getData();
-
+        data = new CityNameData(CityNameData.cityMap.get(MyApplication.getCityServiceCity())).getData();
         //设置RecycleView
         adapter = new CitySelectAdapter(this, data);
         adapter.setOnItemAddListener((name) -> {
@@ -75,7 +75,7 @@ public class CityServiceCitySelectActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                adapter.setData(CityNameData.getSearchData("HangZhou", s.toString()));
+                adapter.setData(CityNameData.getSearchData(CityNameData.cityMap.get(MyApplication.getCityServiceCity()), s.toString()));
                 adapter.notifyDataSetChanged();
             }
 
@@ -98,6 +98,7 @@ public class CityServiceCitySelectActivity extends AppCompatActivity {
     }
 
     private void chooseCity(String cityName) {
+        MyApplication.setCityServiceCity(cityName);
         finish();
     }
 }

@@ -61,7 +61,9 @@ public class FunctionAdapter extends RecyclerView.Adapter {
             }
             holder.iv.setImageResource(data.get(position).getRes());
             holder.iv.setOnClickListener(v -> {
-                listener.startActivity(data.get(position));
+                if(listener!=null){
+                    listener.startActivity(data.get(position));
+                }
             });
         }
     }

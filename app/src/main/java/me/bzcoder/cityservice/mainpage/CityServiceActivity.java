@@ -30,6 +30,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.bzcoder.app.MyApplication;
 import me.bzcoder.app.R;
 import me.bzcoder.cityservice.cityselect.RouterHub;
 import me.bzcoder.cityservice.data.CityData;
@@ -98,11 +99,11 @@ public class CityServiceActivity extends AppCompatActivity {
             });
         }
 
-        tvCitySelect.setText("城市服务·" + CityNameData.cityMap.get("HangZhou"));
+        tvCitySelect.setText("城市服务·" + CityNameData.cityMap.get(MyApplication.getCityServiceCity()));
 
 
         try {
-            CityData cityData = CityServiceDateFactory.CityServiceDateFactory("HangZhou");
+            CityData cityData = CityServiceDateFactory.CityServiceDateFactory(MyApplication.getCityServiceCity());
             data = cityData.getData();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
@@ -184,9 +185,7 @@ public class CityServiceActivity extends AppCompatActivity {
         });
 
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener()
-
-        {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 if (tab != null) {
@@ -243,15 +242,14 @@ public class CityServiceActivity extends AppCompatActivity {
     private void moveToPosition(int n) {
         mScroller.setTargetPosition(n);
         gridManager.startSmoothScroll(mScroller);
-        ARouter.getInstance().destroy();
     }
 
     @OnClick({R.id.tv_city_select, R.id.back_arrow})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_city_select:
-//                ARouter.getInstance().build(RoutePath.CITY_SERVICE_CITY_SELECT_ACTIVITY)
-//                        .navigation(CityServiceActivity.this, 101);
+                ARouter.getInstance().build(RouterHub.CITY_SERVICE_CITY_SELECT_ACTIVITY)
+                        .navigation(CityServiceActivity.this, 101);
                 break;
             case R.id.back_arrow:
                 finish();
